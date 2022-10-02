@@ -44,7 +44,9 @@ const Home = () => {
     <div className="book-container">
       {books.map((book) => (
         <div className="book" key={book._id}>
-          <img src={book.cover} alt="" className="bookCover" />
+          <div className="cover">
+            <img src={book.cover} alt="" className="bookCover" />
+          </div>
           <div className="bookInfo">
             <div className="bookTitle">{book.title}</div>
             <div className="bookAuthor">{`Author: ${book.username}`}</div>
@@ -65,7 +67,6 @@ const Home = () => {
           </div>
         </div>
       ))}
-      ;
     </div>
   );
 };
