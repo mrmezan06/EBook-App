@@ -28,11 +28,9 @@
   text-decoration: none;
   color: white;
   font-size: 28px;
+  flex: 1;
 }
 
-.userLink {
-  text-decoration: none;
-  color: white;
-  font-size: 32px;
-  cursor: pointer;
+.userLogo {
+  flex: 1;
 }

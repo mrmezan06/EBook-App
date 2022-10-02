@@ -24,7 +24,7 @@ const UserMenu = () => {
           <Link to="profile" className="userlink">
             Profile
           </Link>
-          <Link to="logout" className="userlink">
+          <Link to="login" className="userlink">
             Logout
           </Link>
         </div>
