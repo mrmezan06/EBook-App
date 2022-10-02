@@ -1,0 +1,27 @@
+.navContainer {
+  display: flex;
+  width: 100%;
+  max-width: 1024px;
+  justify-content: space-between;
+  align-items: center;
+  height: 200px;
+  background-color: lightgreen;
+  padding: 20px 40px;
+  border-radius: 10px;
+}
+
+.logo {
+  font-size: 32px;
+  color: white;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  font-size: 32px;
+}
