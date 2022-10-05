@@ -18,13 +18,16 @@ const UserMenu = () => {
       {/* Menu Item */}
       {showMenu && (
         <div className="menuItems">
-          <Link to="upload" className="userlink">
+          <Link to="/search" className="userlink">
+            Search
+          </Link>
+          <Link to="/upload" className="userlink">
             Upload
           </Link>
-          <Link to="profile" className="userlink">
+          <Link to="/profile" className="userlink">
             Profile
           </Link>
-          <Link to="login" className="userlink">
+          <Link to="/login" className="userlink">
             Logout
           </Link>
         </div>

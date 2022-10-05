@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import Upload from "./pages/upload/Upload";
 import Registration from "./pages/registration/Registration";
 import App from "./App";
+import Search from "./pages/search/Search";
 
 const rootElement = document.getElementById("root");
 render(
@@ -15,6 +16,7 @@ render(
       <Route path="/login" element={<Login />} />
       <Route path="/registration" element={<Registration />} />
       <Route path="/upload" element={<Upload />} />
+      <Route path="/search" element={<Search />} />
     </Routes>
   </BrowserRouter>,
   rootElement
