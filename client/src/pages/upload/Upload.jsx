@@ -66,6 +66,15 @@ const Upload = () => {
               placeholder="Image URL of the book"
             />
           </div>
+          <div className="book-name">
+            <label htmlFor="book">Book URL</label>
+            <input
+              type="text"
+              name="book"
+              id="book"
+              placeholder="Book URL of the book"
+            />
+          </div>
           <div className="book-submit">
             <button className="submit">Submit</button>
           </div>
