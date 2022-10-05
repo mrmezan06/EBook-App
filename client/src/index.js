@@ -15,7 +15,7 @@ render(
       <Route path="/profile" element={<Profile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registration" element={<Registration />} />
-      <Route path="/upload" element={<Upload />} />
+      <Route path="/upload/:id" element={<Upload />} />
       <Route path="/search" element={<Search />} />
     </Routes>
   </BrowserRouter>,

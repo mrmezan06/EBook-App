@@ -21,7 +21,7 @@ const UserMenu = () => {
           <Link to="/search" className="userlink">
             Search
           </Link>
-          <Link to="/upload" className="userlink">
+          <Link to="/upload/abcdefg" className="userlink">
             Upload
           </Link>
           <Link to="/profile" className="userlink">
