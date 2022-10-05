@@ -4,9 +4,11 @@ import Footer from "./components/footer/Footer";
 import "./app.css";
 export default function App() {
   return (
-    <div className="main-container">
+    <div className="app">
       <Navbar />
-      <Home />
+      <div className="main-container">
+        <Home />
+      </div>
       <Footer />
     </div>
   );

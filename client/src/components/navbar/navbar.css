@@ -1,16 +1,15 @@
 .navContainer {
   display: flex;
   width: 100%;
-  max-width: 1024px;
+  max-width: 1004px;
   justify-content: space-between;
   align-items: center;
   height: 80px;
   background-color: teal;
-  padding: 0px 20px;
+  padding: 0px 10px;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  top: 10px;
+  z-index: 100;
 }
 
 .logo {
