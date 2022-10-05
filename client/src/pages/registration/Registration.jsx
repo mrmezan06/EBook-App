@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 
@@ -56,6 +57,11 @@ const Registration = () => {
             />
           </div>
 
+          <div className="book-name">
+            <Link to={"/login"} className="registerLink">
+              Already have an account? <span>Login</span>
+            </Link>
+          </div>
           <div className="book-submit">
             <button className="submit">Submit</button>
           </div>

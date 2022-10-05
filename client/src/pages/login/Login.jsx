@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
+
+import "./login.css";
 
 const Login = () => {
   return (
@@ -31,6 +34,12 @@ const Login = () => {
               id="password"
               placeholder="Enter your password"
             />
+          </div>
+
+          <div className="book-name">
+            <Link to={"/register"} className="registerLink">
+              Don't have an account? <span>Register</span>
+            </Link>
           </div>
 
           <div className="book-submit">

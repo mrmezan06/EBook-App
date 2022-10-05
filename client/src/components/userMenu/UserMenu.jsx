@@ -6,6 +6,20 @@ import { Link } from "react-router-dom";
 
 const UserMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
+  // Fetch user data from local storage
+  const userId = localStorage.getItem("userID");
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  if (userId) {
+    setLoggedIn(true);
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("userID");
+    localStorage.removeItem("token");
+    console.log("All data removed from local storage");
+  };
+
   return (
     <div className="userMenu">
       <FontAwesomeIcon
@@ -21,13 +35,16 @@ const UserMenu = () => {
           <Link to="/search" className="userlink">
             Search
           </Link>
-          <Link to="/upload/abcdefg" className="userlink">
+          <Link
+            to={loggedIn ? `/upload/${userId}` : "/login"}
+            className="userlink"
+          >
             Upload
           </Link>
           <Link to="/profile" className="userlink">
             Profile
           </Link>
-          <Link to="/login" className="userlink">
+          <Link to={"/login"} onClick={handleLogout} className="userlink">
             Logout
           </Link>
         </div>
