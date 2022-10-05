@@ -45,6 +45,17 @@ const Upload = () => {
             ></textarea>
           </div>
           <div className="book-name">
+            <label htmlFor="category" className="category">
+              Category
+            </label>
+            <input
+              type="text"
+              name="category"
+              id="category"
+              placeholder="Category of the book. Eg: Fiction, Non-Fiction, etc."
+            />
+          </div>
+          <div className="book-name">
             <label htmlFor="image" className="image">
               Image URL
             </label>
