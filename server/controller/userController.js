@@ -49,6 +49,7 @@ exports.Login = async (req, res) => {
       .status(200)
       .json({
         ...otherDetails,
+        token,
       });
   } catch (error) {
     res.status(500).json({

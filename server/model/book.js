@@ -27,8 +27,12 @@ const bookSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
+    user: {
+      type: {
+        _id: mongoose.Schema.Types.ObjectId,
+        name: String,
+        isAdmin: Boolean,
+      },
     },
   },
   { timestamps: true }

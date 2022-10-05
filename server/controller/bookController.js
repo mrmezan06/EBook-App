@@ -1,9 +1,17 @@
 const Book = require("../model/book");
+const User = require("../model/user");
+const mongoose = require("mongoose");
 
 exports.Upload = async (req, res) => {
   try {
     const { title, author, description, category, image, bookUrl } = req.body;
-    const UserId = req.params.id;
+    const _id = mongoose.mongo.ObjectId(req.params.uid);
+
+    const user = await User.findById(_id);
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
 
     const book = await Book.create({
       title,
@@ -12,7 +20,7 @@ exports.Upload = async (req, res) => {
       category,
       image,
       bookUrl,
-      userId: UserId,
+      user: { _id: user._id, name: user.name, isAdmin: user.isAdmin },
     });
 
     res.status(201).json(book);

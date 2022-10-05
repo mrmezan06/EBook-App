@@ -42,6 +42,13 @@
   border: 2px solid teal;
 }
 
+.book-name input:required {
+  border: 2px solid teal;
+}
+.book-name input:invalid {
+  border: 2px solid red;
+}
+
 .book-name textarea {
   height: 180px;
   border: 1px solid #ccc;
@@ -54,7 +61,12 @@
   outline: none;
   border: 2px solid teal;
 }
-
+.book-name textarea:required {
+  border: 2px solid teal;
+}
+.book-name textarea:invalid {
+  border: 2px solid red;
+}
 .book-submit {
   display: flex;
   justify-content: center;

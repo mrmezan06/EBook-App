@@ -1,11 +1,39 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const Registration = () => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [name, setName] = React.useState("");
+
+  const navigate = useNavigate();
+
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    await axios
+      .post("/auth/register", { name, email, password })
+      .then((res) => {
+        console.log(res);
+        toast.success("Registration successful");
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(`Registration failed: ${err.code}`);
+      });
+  };
+
   return (
     <div className="app">
+      <Toaster />
       <Navbar />
       <div className="main-container">
         <h1>Registration</h1>
@@ -19,6 +47,8 @@ const Registration = () => {
               name="name"
               id="name"
               placeholder="Your Full Name"
+              onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
 
@@ -31,6 +61,8 @@ const Registration = () => {
               name="email"
               id="email"
               placeholder="Enter your email address"
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -39,10 +71,12 @@ const Registration = () => {
               Password
             </label>
             <input
-              type="pasword"
+              type="password"
               name="password"
               id="password"
               placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           <div className="book-name">
@@ -54,6 +88,8 @@ const Registration = () => {
               name="confirm"
               id="confirm"
               placeholder="Confirm your password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -63,7 +99,9 @@ const Registration = () => {
             </Link>
           </div>
           <div className="book-submit">
-            <button className="submit">Submit</button>
+            <button className="submit" onClick={() => handleRegister()}>
+              Submit
+            </button>
           </div>
         </div>
       </div>

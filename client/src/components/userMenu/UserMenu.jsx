@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./userMenu.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -10,15 +10,23 @@ const UserMenu = () => {
   const userId = localStorage.getItem("userID");
 
   const [loggedIn, setLoggedIn] = useState(false);
-  if (userId) {
-    setLoggedIn(true);
-  }
 
-  const handleLogout = () => {
-    localStorage.removeItem("userID");
-    localStorage.removeItem("token");
-    console.log("All data removed from local storage");
+  const navigate = useNavigate();
+
+  const handleLogout = (e) => {
+    console.log("Logout successful");
+    localStorage.clear();
+    setLoggedIn(false);
+    navigate("/login");
   };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userID");
+
+    if (userId) {
+      setLoggedIn(true);
+    }
+  }, [userId]);
 
   return (
     <div className="userMenu">
@@ -41,12 +49,24 @@ const UserMenu = () => {
           >
             Upload
           </Link>
-          <Link to="/profile" className="userlink">
-            Profile
-          </Link>
-          <Link to={"/login"} onClick={handleLogout} className="userlink">
+          {loggedIn ? (
+            <Link to="/profile" className="userlink">
+              Profile
+            </Link>
+          ) : (
+            <Link to="/login" className="userlink">
+              Login
+            </Link>
+          )}
+
+          <button
+            onClick={() => {
+              handleLogout();
+            }}
+            className="userlink"
+          >
             Logout
-          </Link>
+          </button>
         </div>
       )}
     </div>

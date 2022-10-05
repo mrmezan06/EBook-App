@@ -36,4 +36,7 @@
   font-weight: 200;
   text-decoration: none;
   color: white;
+  border: none;
+  background-color: teal;
+  cursor: pointer;
 }
