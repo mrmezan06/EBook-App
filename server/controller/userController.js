@@ -57,3 +57,71 @@ exports.Login = async (req, res) => {
     });
   }
 };
+// get user
+exports.getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+// Update user
+exports.updateUser = async (req, res) => {
+  try {
+    const { name, email, password, profileImg } = req.body;
+
+    if (password) {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(password, salt);
+      const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          name,
+          email,
+          profileImg,
+          password: hash,
+        },
+        {
+          new: true,
+        }
+      );
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
+      res.status(200).json(user);
+    } else {
+      const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          name,
+          email,
+          profileImg,
+        },
+        {
+          new: true,
+        }
+      );
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};

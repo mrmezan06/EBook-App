@@ -50,7 +50,7 @@ const UserMenu = () => {
             Upload
           </Link>
           {loggedIn ? (
-            <Link to="/profile" className="userlink">
+            <Link to={`/profile/${userId}`} className="userlink">
               Profile
             </Link>
           ) : (
