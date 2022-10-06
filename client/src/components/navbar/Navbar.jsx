@@ -21,8 +21,8 @@ const Navbar = () => {
         <Link to="/?cat=science" className="link">
           Science
         </Link>
-        <Link to="/?cat=bcs" className="link">
-          Mathematics
+        <Link to="/?cat=math" className="link">
+          Math
         </Link>
         <Link to="/?cat=history" className="link">
           History

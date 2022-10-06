@@ -4,58 +4,17 @@ import "./home.css";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
-  /* const books = [
-    {
-      _id: 1,
-      username: "Safak Kocaoglu",
-      uploader: "Admin",
-      title: "Lorem ipsum dolor sit amet.",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      cover:
-        "https://images.unsplash.com/photo-1661961111247-e218f67d1cd2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80",
-      pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-    },
-    {
-      _id: 2,
-      username: "Safak Kocaoglu",
-      uploader: "Admin",
-      title: "Lorem ipsum dolor sit amet.",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      cover:
-        "https://images.unsplash.com/photo-1661961111247-e218f67d1cd2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80",
-      pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-    },
-    {
-      _id: 3,
-      username: "Safak Kocaoglu",
-      uploader: "Admin",
-      title: "Lorem ipsum dolor sit amet.",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      cover:
-        "https://images.unsplash.com/photo-1661961111247-e218f67d1cd2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80",
-      pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-    },
-    {
-      _id: 4,
-      username: "Safak Kocaoglu",
-      uploader: "Admin",
-      title: "Lorem ipsum dolor sit amet.",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      cover:
-        "https://images.unsplash.com/photo-1661961111247-e218f67d1cd2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80",
-      pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-    },
-  ]; */
-
   const [books, setBooks] = useState([]);
+  const location = useLocation();
 
-  const fetchBooks = async () => {
+  const fetchBooks = async (category) => {
     try {
+      // console.log(category);
       await axios
-        .get("/books/getBooks")
+        .get(`/books/getBooks${category}`)
         .then((res) => {
           setBooks(res.data);
 
@@ -73,8 +32,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchBooks();
-  }, []);
+    const category = location.search;
+    fetchBooks(category);
+  }, [location]);
 
   return (
     <div className="book-container">

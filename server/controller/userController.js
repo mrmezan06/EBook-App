@@ -99,7 +99,17 @@ exports.updateUser = async (req, res) => {
           message: "User not found",
         });
       }
-      res.status(200).json(user);
+      const token = jwt.sign(
+        {
+          id: user._id,
+          isAdmin: user.isAdmin,
+        },
+        process.env.SECRET
+      );
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .json(user);
     } else {
       const user = await User.findByIdAndUpdate(
         req.params.id,

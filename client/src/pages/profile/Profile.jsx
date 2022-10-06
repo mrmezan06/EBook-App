@@ -14,6 +14,7 @@ const Profile = () => {
   const [name, setName] = React.useState("");
 
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userID");
 
   const handleUpdate = async () => {
     const userId = localStorage.getItem("userID");
@@ -57,7 +58,6 @@ const Profile = () => {
     await axios
       .get(`/auth/user/${id}`)
       .then((res) => {
-        console.log(res.data);
         setEmail(res.data.email);
         setName(res.data.name);
         setPassword(res.data.password);
@@ -69,12 +69,9 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const userId = localStorage.getItem("userID");
-    if (userId) {
-      fetchData(userId);
-    }
+    fetchData(userId);
     // eslint-disable-next-line
-  }, []);
+  }, [userId]);
 
   return (
     <div className="app">
