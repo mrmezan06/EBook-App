@@ -79,3 +79,38 @@ exports.DeleteBook = async (req, res) => {
     });
   }
 };
+
+// Search a book by title or category
+exports.SearchBook = async (req, res) => {
+  const title = req.query.title;
+  try {
+    const book = await Book.find({ title: { $regex: title, $options: "i" } });
+    if (book.length === 0) {
+      const book = await Book.find({
+        category: { $regex: title, $options: "i" },
+      });
+
+      if (book.length === 0) {
+        const book = await Book.find({
+          description: { $regex: title, $options: "i" },
+        });
+        if (book.length === 0) {
+          const book = await Book.find({
+            author: { $regex: title, $options: "i" },
+          });
+          res.status(200).json(book);
+        } else {
+          res.status(200).json(book);
+        }
+      } else {
+        res.status(200).json(book);
+      }
+    } else {
+      res.status(200).json(book);
+    }
+  } catch (error) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
+};

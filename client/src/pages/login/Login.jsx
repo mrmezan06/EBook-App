@@ -19,6 +19,7 @@ const Login = () => {
       .then((res) => {
         localStorage.setItem("userID", res.data._id);
         localStorage.setItem("token", res.data.token);
+        console.log(res.data._id);
         if (res.status === 200) {
           navigate(`/upload/${res.data._id}`);
         } else {
@@ -56,7 +57,7 @@ const Login = () => {
               Password
             </label>
             <input
-              type="pasword"
+              type="password"
               name="password"
               id="password"
               placeholder="Enter your password"
