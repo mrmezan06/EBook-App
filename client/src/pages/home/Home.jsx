@@ -5,19 +5,35 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { Pagination, Box } from "@mui/material";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
   const location = useLocation();
 
-  const fetchBooks = async (category) => {
-    try {
-      // console.log(category);
-      await axios
-        .get(`/books/getBooks${category}`)
-        .then((res) => {
-          setBooks(res.data);
+  const [pageSize, setPageSize] = useState(1);
 
+  const [pages, setPages] = useState(1);
+
+  const itemsPerPage = 3;
+
+  const handlePageChange = (event, page) => {
+    setPages(page);
+  };
+
+  const fetchBooks = async (category) => {
+    if (!category) {
+      category = "?";
+    } else {
+      category = `${category}&`;
+    }
+
+    try {
+      await axios
+        .get(`/books/getBooks${category}page=${pages}&items=${itemsPerPage}`)
+        .then((res) => {
+          setBooks(res.data.books);
+          setPageSize(res.data.pageCount);
           // Fetch User Details
         })
         .catch((err) => {
@@ -34,7 +50,8 @@ const Home = () => {
   useEffect(() => {
     const category = location.search;
     fetchBooks(category);
-  }, [location]);
+    // eslint-disable-next-line
+  }, [location, pages]);
 
   return (
     <div className="book-container">
@@ -69,6 +86,20 @@ const Home = () => {
           </div>
         </div>
       ))}
+      {/* Centering the paginate components */}
+      <Box
+        justifyContent="center"
+        display="flex"
+        alignItems="center"
+        sx={{ margin: "20px 0px" }}
+      >
+        {/* Paginate */}
+        <Pagination
+          count={pageSize}
+          color={"secondary"}
+          onChange={handlePageChange}
+        />
+      </Box>
     </div>
   );
 };

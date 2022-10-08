@@ -11,19 +11,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import "./search.css";
 import UserMenu from "../../components/userMenu/UserMenu";
+import { Pagination, Box } from "@mui/material";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
 
   const [books, setBooks] = useState([]);
+  const [pageSize, setPageSize] = useState(1);
+
+  const [pages, setPages] = useState(1);
+
+  const itemsPerPage = 3;
+
+  const handlePageChange = (event, page) => {
+    setPages(page);
+  };
 
   const fetchBooks = async () => {
     try {
       // console.log(category);
       await axios
-        .get(`/books/search?title=${searchTerm}`)
+        .get(
+          `/books/search?title=${searchTerm}&page=${pages}&items=${itemsPerPage}`
+        )
         .then((res) => {
-          setBooks(res.data);
+          setBooks(res.data.books);
+          setPageSize(res.data.pageCount);
 
           // Fetch User Details
         })
@@ -41,7 +54,7 @@ const Search = () => {
   useEffect(() => {
     fetchBooks();
     // eslint-disable-next-line
-  }, [searchTerm]);
+  }, [searchTerm, pages]);
 
   return (
     <div className="app">
@@ -71,7 +84,7 @@ const Search = () => {
           <div className="searchInput">
             <input
               type="text"
-              placeholder="Search by book title"
+              placeholder="Search for books"
               onChange={(e) => {
                 setSearchTerm(e.target.value);
               }}
@@ -118,6 +131,19 @@ const Search = () => {
             </div>
           ))}
         </div>
+        <Box
+          justifyContent="center"
+          display="flex"
+          alignItems="center"
+          sx={{ margin: "20px 0px" }}
+        >
+          {/* Paginate */}
+          <Pagination
+            count={pageSize}
+            color={"secondary"}
+            onChange={handlePageChange}
+          />
+        </Box>
       </div>
       <Footer />
     </div>
