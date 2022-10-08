@@ -16,6 +16,7 @@
   font-size: 32px;
   color: white;
   cursor: pointer;
+  flex: 1;
 }
 
 .menu {
