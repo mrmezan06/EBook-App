@@ -113,9 +113,13 @@ exports.SearchBook = async (req, res) => {
     });
     var pageCount = Math.ceil(count / ITEMS_PER_PAGE);
 
-    const books = await Book.find({ title: { $regex: title, $options: "i" } })
+    const books = await Book.find({
+      title: { $regex: title, $options: "i" },
+    })
       .limit(ITEMS_PER_PAGE)
-      .skip(skip);
+      .skip(skip)
+      .sort({ createdAt: "desc" });
+
     if (books.length === 0) {
       count = await Book.countDocuments({
         category: { $regex: title, $options: "i" },
@@ -126,7 +130,8 @@ exports.SearchBook = async (req, res) => {
         category: { $regex: title, $options: "i" },
       })
         .limit(ITEMS_PER_PAGE)
-        .skip(skip);
+        .skip(skip)
+        .sort({ createdAt: "desc" });
 
       if (books.length === 0) {
         count = await Book.countDocuments({
@@ -138,7 +143,8 @@ exports.SearchBook = async (req, res) => {
           description: { $regex: title, $options: "i" },
         })
           .limit(ITEMS_PER_PAGE)
-          .skip(skip);
+          .skip(skip)
+          .sort({ createdAt: "desc" });
         if (books.length === 0) {
           count = await Book.countDocuments({
             author: { $regex: title, $options: "i" },
@@ -149,7 +155,8 @@ exports.SearchBook = async (req, res) => {
             author: { $regex: title, $options: "i" },
           })
             .limit(ITEMS_PER_PAGE)
-            .skip(skip);
+            .skip(skip)
+            .sort({ createdAt: "desc" });
 
           res.status(200).json({ books, pageCount });
         } else {

@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Pagination, Box } from "@mui/material";
 
+import { formatDistanceToNow, parseISO } from "date-fns";
+
 const Home = () => {
   const [books, setBooks] = useState([]);
   const location = useLocation();
@@ -34,6 +36,7 @@ const Home = () => {
         .then((res) => {
           setBooks(res.data.books);
           setPageSize(res.data.pageCount);
+          // console.log(books);
           // Fetch User Details
         })
         .catch((err) => {
@@ -69,6 +72,10 @@ const Home = () => {
             </div>
             <div className="bookUploader">
               Uploader: <span>{book.user.name}</span>
+            </div>
+            <div className="agotime">
+              Uploaded :{" "}
+              <span>{formatDistanceToNow(parseISO(book.createdAt))} ago</span>
             </div>
             <div className="bookButtons">
               <a className="bookLink" href={book.bookUrl}>
