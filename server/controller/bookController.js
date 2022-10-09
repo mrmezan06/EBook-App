@@ -174,3 +174,16 @@ exports.SearchBook = async (req, res) => {
     });
   }
 };
+
+// Get All Books by Admin
+exports.GetAllBooks = async (req, res) => {
+  try {
+    const books = await Book.find();
+    const count = await Book.countDocuments();
+    res.status(200).json({ count, books });
+  } catch (error) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
+};

@@ -4,6 +4,7 @@ const {
   DeleteBook,
   UpdateBook,
   SearchBook,
+  GetAllBooks,
 } = require("../controller/bookController");
 const { verifyAdmin, verifyUser } = require("../utils/Verify");
 
@@ -18,5 +19,7 @@ router.put("/update/user/:uid/:id", verifyUser, UpdateBook);
 router.put("/update/admin/:id", verifyAdmin, UpdateBook);
 // Search book by title
 router.get("/search/", SearchBook);
+
+router.get("/admin/:id", GetAllBooks);
 
 module.exports = router;
