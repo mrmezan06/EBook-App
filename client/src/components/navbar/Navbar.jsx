@@ -25,11 +25,11 @@ const Navbar = () => {
         <Link to="/?cat=hacking" className="link">
           Hacking
         </Link>
-        <Link to="/?cat=math" className="link">
-          Math
+        <Link to="/?cat=networking" className="link">
+          Networking
         </Link>
-        <Link to="/?cat=history" className="link">
-          History
+        <Link to="/?cat=cybersecurity" className="link">
+          Security
         </Link>
 
         <div className="search">
