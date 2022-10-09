@@ -178,12 +178,57 @@ exports.SearchBook = async (req, res) => {
 // Get All Books by Admin
 exports.GetAllBooks = async (req, res) => {
   try {
-    const books = await Book.find();
-    const count = await Book.countDocuments();
-    res.status(200).json({ count, books });
+    const user = await User.findById(req.params.id);
+    if (user?.isAdmin) {
+      const books = await Book.find();
+      const count = await Book.countDocuments();
+      res.status(200).json({ count, books });
+    } else {
+      // find where book.user._id === req.params.id
+      const books = await Book.find();
+      const uid = req.params.id;
+
+      const MyBook = books.filter((book) => book.user._id == uid);
+      const count = MyBook.length;
+      res.status(200).json({ count, books: MyBook });
+    }
   } catch (error) {
     res.status(400).json({
-      error: error.message,
+      message: error.message,
+    });
+  }
+};
+
+// Delete a book by User by Book Id
+exports.DeleteBookById = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (book) {
+      if (req.params.uid === book.user._id.toString()) {
+        await Book.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "Book deleted successfully" });
+      } else {
+        res
+          .status(400)
+          .json({ message: "You don't have permission to delete this book" });
+      }
+    } else {
+      res.status(404).json({ message: "Book not found" });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+// Delete by Admin
+exports.DeleteBookByAdmin = async (req, res) => {
+  try {
+    await Book.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Book deleted successfully" });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
     });
   }
 };

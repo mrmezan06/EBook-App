@@ -17,7 +17,7 @@ const Login = () => {
       .then((res) => {
         localStorage.setItem("userID", res.data._id);
         localStorage.setItem("token", res.data.token);
-        console.log(res.data._id);
+        // console.log(res.data._id);
         if (res.status === 200) {
           navigate(`/upload/${res.data._id}`);
         } else {

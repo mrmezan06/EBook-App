@@ -9,6 +9,46 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
+  const handleEditClick = (id) => {
+    console.log("Edit", id - 1);
+  };
+  const handleDeleteClick = async (id) => {
+    try {
+      const bookId = rows[id - 1]._id;
+
+      await axios
+        .get(`/auth/user/${userId}`)
+        .then(async (res) => {
+          // console.log(res.data);
+          if (res.data.isAdmin) {
+            await axios.delete(`/books/admin/${bookId}`).then((res) => {
+              if (res.status === 200) {
+                toast.success("Book Deleted Successfully");
+                fetchData();
+              } else {
+                toast.error(res.data.message);
+              }
+            });
+          } else {
+            await axios
+              .delete(`/books/user/${userId}/${bookId}`)
+              .then((res) => {
+                if (res.status === 200) {
+                  toast.success("Book Deleted Successfully");
+                  fetchData();
+                } else {
+                  toast.error(res.data.message);
+                }
+              });
+          }
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  };
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -50,7 +90,7 @@ const Dashboard = () => {
         return [
           <GridActionsCellItem
             icon={<FontAwesomeIcon icon={faTrash} />}
-            label="Save"
+            label="Delete"
             onClick={() => handleDeleteClick(id)}
           />,
         ];
@@ -59,14 +99,8 @@ const Dashboard = () => {
   ];
 
   const [rows, setRows] = useState([]);
-  const handleEditClick = (id) => {
-    console.log("Edit", id);
-  };
-  const handleDeleteClick = (id) => {
-    console.log("delete", rows[id - 1]);
-  };
-
   const userId = localStorage.getItem("userID");
+
   const navigate = useNavigate();
 
   const [pageSize, setPageSize] = React.useState(0);
@@ -78,7 +112,7 @@ const Dashboard = () => {
     await axios
       .get(`/books/admin/${userId}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setPageSize(res.data.count);
         // setBooks(res.data.books);
         var rw = [];
