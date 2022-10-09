@@ -182,15 +182,15 @@ exports.GetAllBooks = async (req, res) => {
     if (user?.isAdmin) {
       const books = await Book.find();
       const count = await Book.countDocuments();
-      res.status(200).json({ count, books });
+      res.status(200).json({ count, books, isAdmin: user?.isAdmin });
     } else {
       // find where book.user._id === req.params.id
       const books = await Book.find();
       const uid = req.params.id;
 
-      const MyBook = books.filter((book) => book.user._id == uid);
+      const MyBook = books.filter((book) => book.user?._id == uid);
       const count = MyBook.length;
-      res.status(200).json({ count, books: MyBook });
+      res.status(200).json({ count, books: MyBook, isAdmin: user?.isAdmin });
     }
   } catch (error) {
     res.status(400).json({

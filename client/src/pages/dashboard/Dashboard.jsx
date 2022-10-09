@@ -9,6 +9,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
   const handleEditClick = (id) => {
     console.log("Edit", id - 1);
   };
@@ -49,7 +50,41 @@ const Dashboard = () => {
       toast.error("Something went wrong!");
     }
   };
-  const columns = [
+  const columnsUser = [
+    { field: "id", headerName: "ID", width: 100 },
+    {
+      field: "title",
+      headerName: "Title",
+      width: 320,
+    },
+    {
+      field: "author",
+      headerName: "Author",
+      width: 190,
+    },
+    {
+      field: "uploader",
+      headerName: "Uploader",
+      width: 190,
+    },
+    {
+      field: "edit",
+      headerName: "Edit",
+      type: "actions",
+      width: 160,
+      getActions: ({ id }) => {
+        return [
+          <GridActionsCellItem
+            icon={<FontAwesomeIcon icon={faPen} />}
+            label="Edit"
+            onClick={() => handleEditClick(id)}
+          />,
+        ];
+      },
+    },
+  ];
+
+  const columnsAdmin = [
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "title",
@@ -114,6 +149,7 @@ const Dashboard = () => {
       .then((res) => {
         // console.log(res.data);
         setPageSize(res.data.count);
+        setIsAdmin(res.data.isAdmin);
         // setBooks(res.data.books);
         var rw = [];
         if (res.data.books.length > 0) {
@@ -146,7 +182,7 @@ const Dashboard = () => {
       <Box sx={{ height: 600, width: "100%" }}>
         <DataGrid
           rows={rows}
-          columns={columns}
+          columns={isAdmin ? columnsAdmin : columnsUser}
           pageSize={pageSize}
           rowsPerPageOptions={[pageSize]}
         />
