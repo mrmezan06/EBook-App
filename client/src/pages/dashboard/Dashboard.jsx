@@ -17,72 +17,62 @@ const Dashboard = () => {
     try {
       const bookId = rows[id - 1]._id;
 
-      await axios
-        .get(`/auth/user/${userId}`)
-        .then(async (res) => {
-          // console.log(res.data);
-          if (res.data.isAdmin) {
-            await axios.delete(`/books/admin/${bookId}`).then((res) => {
-              if (res.status === 200) {
-                toast.success("Book Deleted Successfully");
-                fetchData();
-              } else {
-                toast.error(res.data.message);
-              }
-            });
+      if (isAdmin) {
+        await axios.delete(`/books/admin/${bookId}`).then((res) => {
+          if (res.status === 200) {
+            toast.success("Book Deleted Successfully");
+            fetchData();
           } else {
-            await axios
-              .delete(`/books/user/${userId}/${bookId}`)
-              .then((res) => {
-                if (res.status === 200) {
-                  toast.success("Book Deleted Successfully");
-                  fetchData();
-                } else {
-                  toast.error(res.data.message);
-                }
-              });
+            toast.error(res.data.message);
           }
-        })
-        .catch((err) => {
-          toast.error(err);
         });
+      } else {
+        await axios.delete(`/books/user/${userId}/${bookId}`).then((res) => {
+          if (res.status === 200) {
+            toast.success("Book Deleted Successfully");
+            fetchData();
+          } else {
+            toast.error(res.data.message);
+          }
+        });
+      }
     } catch (error) {
       toast.error("Something went wrong!");
     }
   };
-  const columnsUser = [
-    { field: "id", headerName: "ID", width: 100 },
-    {
-      field: "title",
-      headerName: "Title",
-      width: 320,
-    },
-    {
-      field: "author",
-      headerName: "Author",
-      width: 190,
-    },
-    {
-      field: "uploader",
-      headerName: "Uploader",
-      width: 190,
-    },
-    {
-      field: "edit",
-      headerName: "Edit",
-      type: "actions",
-      width: 160,
-      getActions: ({ id }) => {
-        return [
-          <GridActionsCellItem
-            icon={<FontAwesomeIcon icon={faPen} />}
-            label="Edit"
-            onClick={() => handleEditClick(id)}
-          />,
-        ];
-      },
-    },
-  ];
+  // const columnsUser = [
+  //   { field: "id", headerName: "ID", width: 100 },
+  //   {
+  //     field: "title",
+  //     headerName: "Title",
+  //     width: 320,
+  //   },
+  //   {
+  //     field: "author",
+  //     headerName: "Author",
+  //     width: 190,
+  //   },
+  //   {
+  //     field: "uploader",
+  //     headerName: "Uploader",
+  //     width: 190,
+  //   },
+  //   {
+  //     field: "edit",
+  //     headerName: "Edit",
+  //     type: "actions",
+  //     width: 160,
+  //     getActions: ({ id }) => {
+  //       return [
+  //         <GridActionsCellItem
+  //           icon={<FontAwesomeIcon icon={faPen} />}
+  //           label="Edit"
+  //           onClick={() => handleEditClick(id)}
+  //         />,
+  //       ];
+  //     },
+  //   },
+  // ];
 
   const columnsAdmin = [
     { field: "id", headerName: "ID", width: 90 },
@@ -94,18 +84,18 @@ const Dashboard = () => {
     {
       field: "author",
       headerName: "Author",
-      width: 150,
+      width: 170,
     },
     {
       field: "uploader",
       headerName: "Uploader",
-      width: 110,
+      width: 170,
     },
     {
       field: "edit",
       headerName: "Edit",
       type: "actions",
-      width: 160,
+      width: 150,
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
@@ -120,7 +110,7 @@ const Dashboard = () => {
       field: "delete",
       type: "actions",
       headerName: "Delete",
-      width: 160,
+      width: 150,
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
@@ -182,7 +172,7 @@ const Dashboard = () => {
       <Box sx={{ height: 600, width: "100%" }}>
         <DataGrid
           rows={rows}
-          columns={isAdmin ? columnsAdmin : columnsUser}
+          columns={columnsAdmin}
           pageSize={pageSize}
           rowsPerPageOptions={[pageSize]}
         />
