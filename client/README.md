@@ -1,70 +1,114 @@
-# Getting Started with Create React App
+# Ocean of Books
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [x] Author: [Mejanur Rahman](https://www.github.com/mrmezan06)
 
-## Available Scripts
+- [x] Version: 1.0.0
 
-In the project directory, you can run:
+- [x] License: MIT
 
-### `npm start`
+## Description
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This is a simple web application that allows users to search for books and add them to their reading list. The application uses the Google Books API to search for books and the MongoDB database to store the reading list. The application is built using the MERN stack. The application is deployed on Heroku. The application is live at [https://ocean-book.herokuapp.com/](https://ocean-book.herokuapp.com/).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Table of Contents
 
-### `npm test`
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Utility Function For Number Conversion
 
-### `npm run build`
+- [x] Built-in Library
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```js
+Intl.NumberFormat("en-US", {
+  notation: "compact",
+  maximumFractionDigits: 1,
+}).format(2500);
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [x] Custom Function
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```js
+const formatCash = (n) => {
+  if (n < 1e3) return n;
+  if (n >= 1e3 && n < 1e6) return +(n / 1e3).toFixed(1) + "K";
+  if (n >= 1e6 && n < 1e9) return +(n / 1e6).toFixed(1) + "M";
+  if (n >= 1e9 && n < 1e12) return +(n / 1e9).toFixed(1) + "B";
+  if (n >= 1e12) return +(n / 1e12).toFixed(1) + "T";
+};
 
-### `npm run eject`
+console.log(formatCash(1235000));
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- [x] Seperated with commas
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```js
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- [x] Seperated with commas and test
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
 
-## Learn More
+function test(x, expect) {
+  const result = numberWithCommas(x);
+  const pass = result === expect;
+  console.log(`${pass ? "✓" : "ERROR ====>"} ${x} => ${result}`);
+  return pass;
+}
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+let failures = 0;
+failures += !test(0, "0");
+failures += !test(100, "100");
+failures += !test(1000, "1,000");
+failures += !test(10000, "10,000");
+failures += !test(100000, "100,000");
+failures += !test(1000000, "1,000,000");
+failures += !test(10000000, "10,000,000");
+if (failures) {
+  console.log(`${failures} test(s) failed`);
+} else {
+  console.log("All tests passed");
+}
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```css
+.as-console-wrapper {
+  max-height: 100% !important;
+}
+```
 
-### Code Splitting
+## Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+To install the application follow the instructions below:
 
-### Analyzing the Bundle Size
+```bash
+git clone
+cd client
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Usage
 
-### Making a Progressive Web App
+To use the application follow the instructions below:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+npm start
+```
 
-### Advanced Configuration
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+If you would like to contribute it, you can follow these guidelines for how to do so. Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
 
-### Deployment
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+This project is licensed under the MIT License - see the LICENSE.md file for details
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [x] (This README was generated with ❤️ by [readme-md-generator]()
