@@ -15,6 +15,11 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    if (window.innerWidth < 768) {
+      setShowCategories(false);
+    } else {
+      setShowCategories(true);
+    }
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setShowCategories(false);
